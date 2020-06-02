@@ -10,19 +10,18 @@ const Button = (props) =>  {
 }
 
 const Statistics = (props) => {
-    const calculateAverage = () => {
-        if (props.total === 0) {
-            return (0);
-        }
-        return ((props.good - props.bad)/props.total);
+    if (props.total === 0) {
+        return (
+            <div id="resultsArea">
+                <h1>Statistics</h1>
+                <p>No feedback given.</p>
+            </div>
+        );
     }
+    
+    const calculateAverage = () => ((props.good - props.bad)/props.total);
 
-    const calculatePercent = () => {
-        if (props.total === 0) {
-            return (0);
-        }
-        return ((props.good/props.total) * 100);
-    }
+    const calculatePercent = () => ((props.good/props.total) * 100);
 
     return (
         <div id="resultsArea">
