@@ -9,6 +9,8 @@ const Button = (props) =>  {
     );
 }
 
+const Statistic = (props) => (<tr><td>{props.text}</td><td>{props.value}</td></tr>)
+
 const Statistics = (props) => {
     if (props.total === 0) {
         return (
@@ -26,12 +28,17 @@ const Statistics = (props) => {
     return (
         <div id="resultsArea">
             <h1>Statistics</h1>
-            <p>Good: {props.good}</p>
-            <p>Neutral: {props.neutral}</p>
-            <p>Bad: {props.bad}</p>
-            <p>Total Responses: {props.total}</p>
-            <p>Average Rating: {calculateAverage()}</p>
-            <p>Percent Positive: {calculatePercent()}</p>
+            <table>
+                <tbody>
+                    <Statistic text="Good" value={props.good} />
+                    <Statistic text="Neutral" value={props.neutral} />
+                    <Statistic text="Bad" value={props.bad} />
+                    <Statistic text="Total Responses" value={props.total} />
+                    <Statistic text="Average Score" value={calculateAverage()} />
+                    <Statistic text="Percent Positive" value={calculatePercent()} />
+                </tbody>
+            </table>
+
         </div>
     );
 }
