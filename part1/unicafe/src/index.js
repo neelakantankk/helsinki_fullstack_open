@@ -13,24 +13,62 @@ const App = () => {
     const [good, setGood] = useState(0);
     const [neutral, setNeutral] = useState(0);
     const [bad, setBad] = useState(0);
+    const [total, setTotal] = useState(0);
 
-    const handleGood = () => setGood(good + 1);
-    const handleNeutral = () => setNeutral(neutral + 1);
-    const handleBad = () => setBad(bad + 1);
+    const handleClick = (stateVariable,stateFunction) => {
+        const handler = () => {
+            stateFunction(stateVariable + 1)
+            setTotal(total + 1)
+        }
+        return handler;
+    }
+
+    const calculateAverage = () => {
+        return ((good - bad)/total);
+    }
+
+    const calculatePercent = () => {
+        return ((good/total) * 100);
+    }
+    
+    if (total === 0) {
+        return (
+            <div>
+                <div id="inputArea">   
+                    <h1>Give Feedback </h1>
+                    <Button text="Good" onClick={handleClick(good, setGood)} />
+                    <Button text="Neutral" onClick={handleClick(neutral, setNeutral)} />
+                    <Button text="Bad" onClick={handleClick(bad, setBad)} />
+                </div>
+                <div id="resultsArea">
+                    <h1>Statistics</h1>
+                    <p>Good: {good}</p>
+                    <p>Neutral: {neutral}</p>
+                    <p>Bad: {bad}</p>
+                    <p>Total Responses: {total}</p>
+                    <p>Average Rating: 0</p>
+                    <p>Percent Positive: 0 %</p>
+                </div>
+            </div>
+        );
+    } 
         
     return (
         <div>
             <div id="inputArea">   
                 <h1>Give Feedback </h1>
-                <Button text="Good" onClick={handleGood} />
-                <Button text="Neutral" onClick={handleNeutral} />
-                <Button text="Bad" onClick={handleBad} />
+                <Button text="Good" onClick={handleClick(good, setGood)} />
+                <Button text="Neutral" onClick={handleClick(neutral, setNeutral)} />
+                <Button text="Bad" onClick={handleClick(bad, setBad)} />
             </div>
             <div id="resultsArea">
                 <h1>Statistics</h1>
                 <p>Good: {good}</p>
                 <p>Neutral: {neutral}</p>
                 <p>Bad: {bad}</p>
+                <p>Total Responses: {total}</p>
+                <p>Average Rating: {calculateAverage()}</p>
+                <p>Percent Positive: {calculatePercent()} %</p>
             </div>
         </div>
     );
