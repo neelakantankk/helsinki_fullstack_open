@@ -8,6 +8,35 @@ const Button = (props) =>  {
         </button>
     );
 }
+
+const Statistics = (props) => {
+    const calculateAverage = () => {
+        if (props.total === 0) {
+            return (0);
+        }
+        return ((props.good - props.bad)/props.total);
+    }
+
+    const calculatePercent = () => {
+        if (props.total === 0) {
+            return (0);
+        }
+        return ((props.good/props.total) * 100);
+    }
+
+    return (
+        <div id="resultsArea">
+            <h1>Statistics</h1>
+            <p>Good: {props.good}</p>
+            <p>Neutral: {props.neutral}</p>
+            <p>Bad: {props.bad}</p>
+            <p>Total Responses: {props.total}</p>
+            <p>Average Rating: {calculateAverage()}</p>
+            <p>Percent Positive: {calculatePercent()}</p>
+        </div>
+    );
+}
+
 const App = () => {
     // save clicks of each button to own state
     const [good, setGood] = useState(0);
@@ -23,36 +52,7 @@ const App = () => {
         return handler;
     }
 
-    const calculateAverage = () => {
-        return ((good - bad)/total);
-    }
-
-    const calculatePercent = () => {
-        return ((good/total) * 100);
-    }
-    
-    if (total === 0) {
-        return (
-            <div>
-                <div id="inputArea">   
-                    <h1>Give Feedback </h1>
-                    <Button text="Good" onClick={handleClick(good, setGood)} />
-                    <Button text="Neutral" onClick={handleClick(neutral, setNeutral)} />
-                    <Button text="Bad" onClick={handleClick(bad, setBad)} />
-                </div>
-                <div id="resultsArea">
-                    <h1>Statistics</h1>
-                    <p>Good: {good}</p>
-                    <p>Neutral: {neutral}</p>
-                    <p>Bad: {bad}</p>
-                    <p>Total Responses: {total}</p>
-                    <p>Average Rating: 0</p>
-                    <p>Percent Positive: 0 %</p>
-                </div>
-            </div>
-        );
-    } 
-        
+   
     return (
         <div>
             <div id="inputArea">   
@@ -61,16 +61,8 @@ const App = () => {
                 <Button text="Neutral" onClick={handleClick(neutral, setNeutral)} />
                 <Button text="Bad" onClick={handleClick(bad, setBad)} />
             </div>
-            <div id="resultsArea">
-                <h1>Statistics</h1>
-                <p>Good: {good}</p>
-                <p>Neutral: {neutral}</p>
-                <p>Bad: {bad}</p>
-                <p>Total Responses: {total}</p>
-                <p>Average Rating: {calculateAverage()}</p>
-                <p>Percent Positive: {calculatePercent()} %</p>
-            </div>
-        </div>
+            <Statistics good={good} neutral={neutral} bad={bad} total={total} />
+       </div>
     );
 }
 
