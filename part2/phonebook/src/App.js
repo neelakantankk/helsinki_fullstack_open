@@ -1,28 +1,10 @@
 import React, { useState } from 'react'
+import Filter from './components/Filter'
+import AddPersonForm from './components/AddPersonForm'
+import Persons from './components/Persons'
 
-const App = () => {
-    const [ persons, setPersons ] = useState([
-        { 
-            name: 'Arto Hellas',
-            number: '011-32201922',
-            id: 1
-        },
-        {
-            name: 'Marty McFly',
-            number: '0981231121',
-            id: 2
-        },
-        {
-            name: 'God',
-            number: '000',
-            id:3
-        },
-        {
-            name: 'The Beast',
-            number: '666',
-            id: 4
-        }
-    ]) 
+const App = ({personList}) => {
+    const [ persons, setPersons ] = useState(personList)
     const [ newName, setNewName ] = useState('')
     const [ newNumber, setNewNumber ] = useState('')
     const [ search, setSearch ] = useState('')
@@ -35,11 +17,7 @@ const App = () => {
         setNewNumber(event.target.value)
     }
 
-    const personsToShow = (search === '')
-        ? persons
-        : persons.filter(person => person.name.toLowerCase().includes(search.toLowerCase()))
-
-    const handleSearch = (event) => {
+        const handleSearch = (event) => {
         setSearch(event.target.value)
     }
     
@@ -70,22 +48,17 @@ const App = () => {
     return (
         <div>
             <h1>Phonebook</h1>
-            <div>
-                Filter names: <input value={search} onChange={handleSearch} />
-            </div>
+            <Filter stateVar={search} handleChange={handleSearch} />
             <div>
             <h2>Add new entry</h2>
-                <form onSubmit={handleSubmit} >
-                    Name: <input value={newName} onChange={handleNewName} /><br />
-                    Number: <input value={newNumber} onChange={handleNewNumber} /><br />
-                    <button type="submit">add</button>
-                </form>
+            <AddPersonForm handleSubmit={handleSubmit}
+                    stateVar = {{name: newName, number: newNumber}}
+                    handleChange = {{name: handleNewName, number: handleNewNumber}}
+            />
             </div>
             <div>
                 <h2>Numbers</h2>
-                {personsToShow.map(person => 
-                        <p key={person.id}>{person.name}: {person.number}</p>
-                )}
+                <Persons persons={persons} search={search} />
             </div>
         </div>
     )
