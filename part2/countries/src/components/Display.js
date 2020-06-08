@@ -1,7 +1,7 @@
 import React from 'react'
 import CountryInfo from './CountryInfo'
 
-const Display = ({countries, search}) => {
+const Display = ({countries, search, searchStateHandler}) => {
 
     console.log("Search:" , typeof(search))
     const countriesToShow =  search === ''
@@ -43,7 +43,7 @@ const Display = ({countries, search}) => {
                         <li key={country.alpha3Code}>
                             {country.name}  
                             <button style={{margin: '5px'}}
-                                    onClick={() => console.log('clicked', country )}>
+                                    onClick={() => searchStateHandler(country.name)}>
                             Show details</button>
                         </li>
                         )

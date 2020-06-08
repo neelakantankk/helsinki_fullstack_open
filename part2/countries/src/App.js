@@ -31,7 +31,8 @@ const App = () => {
         <div>
             <h1>Countries of The World</h1>
             <Filter stateVar={countryFilter} stateHandler={handleFilter} />
-            <Display countries={countries} search={countryFilter} />
+            <Display countries={countries} 
+                search={countryFilter} searchStateHandler = {setFilter}/>
         </div>
     )
 }
