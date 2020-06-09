@@ -1,7 +1,7 @@
 import React from 'react'
 import CountryInfo from './CountryInfo'
 
-const Display = ({countries, search, searchStateHandler}) => {
+const Display = ({countries, search, searchStateHandler, weather, weatherSetter}) => {
 
     console.log("Search:" , typeof(search))
     const countriesToShow =  search === ''
@@ -24,7 +24,8 @@ const Display = ({countries, search, searchStateHandler}) => {
         return (
             <div>
                 <h2>Countries</h2>
-                <CountryInfo country={countriesToShow[0]} />
+                <CountryInfo country={countriesToShow[0]} weather={weather} 
+                    weatherSetter={weatherSetter}/>
             </div>
         )
     } else if (countriesToShow.length > 10 ) {

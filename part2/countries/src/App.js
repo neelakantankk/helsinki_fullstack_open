@@ -6,6 +6,7 @@ import Display from './components/Display'
 const App = () => {
     const [countries, setCountries] = useState([])
     const [countryFilter, setFilter] = useState('')
+    const [weather, setWeather] = useState(false)
 
     const hook = () => {
         axios
@@ -32,7 +33,9 @@ const App = () => {
             <h1>Countries of The World</h1>
             <Filter stateVar={countryFilter} stateHandler={handleFilter} />
             <Display countries={countries} 
-                search={countryFilter} searchStateHandler = {setFilter}/>
+                search={countryFilter} searchStateHandler = {setFilter}
+                weather={weather} weatherSetter = {setWeather}
+            />
         </div>
     )
 }
