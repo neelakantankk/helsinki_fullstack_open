@@ -1,14 +1,27 @@
 import React from 'react'
 import CountryInfo from './CountryInfo'
 
+const getCountries = (countries,search) => {
+    if (search=== '') {
+        return countries
+    } 
+    
+    const countriesToFind = countries.find(country => country.name.toLowerCase() === search.toLowerCase());
+
+    if (countriesToFind) {
+        return [countriesToFind]
+    }
+
+    return countries.filter(country =>
+        country.name.toLowerCase().includes(search.toLowerCase())
+    )
+}
+
 const Display = ({countries, search, searchStateHandler, weather, weatherSetter}) => {
     console.log("Rendering Display component")
     console.log("Search:" , typeof(search))
-    const countriesToShow =  search === ''
-        ?countries
-        :countries.filter(country => 
-            country.name.toLowerCase().includes(search.toLowerCase())
-        )
+
+    const countriesToShow = getCountries(countries,search)
     
 
     console.log("Countries to show:\n", countriesToShow)
