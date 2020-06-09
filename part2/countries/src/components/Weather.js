@@ -11,8 +11,6 @@ const Weather = ({capital, weather, weatherSetter}) => {
 
     }
 
-    
-    
 
     const hook = () => {
         console.log("Calling Hook...")
@@ -22,6 +20,9 @@ const Weather = ({capital, weather, weatherSetter}) => {
                 console.log("Response is:",response)
                 weatherSetter(response.data)
             })
+            .catch(error => {
+                weatherSetter(false)
+            })
         }
 
     useEffect(hook, [])
@@ -30,7 +31,7 @@ const Weather = ({capital, weather, weatherSetter}) => {
         return(
             <div id="weather">
                 <h4>Weather in {capital}</h4>
-                <p>Getting data...</p>
+                <p>Weather data not available.</p>
             </div>
         )
     }
