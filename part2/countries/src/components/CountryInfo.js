@@ -3,6 +3,7 @@ import Weather from './Weather'
 
 const CountryInfo = ({country, weather, weatherSetter }) => {
     
+    console.log("Rendering CountryInfo component")
     
 
     return (

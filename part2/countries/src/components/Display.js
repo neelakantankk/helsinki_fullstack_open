@@ -2,7 +2,7 @@ import React from 'react'
 import CountryInfo from './CountryInfo'
 
 const Display = ({countries, search, searchStateHandler, weather, weatherSetter}) => {
-
+    console.log("Rendering Display component")
     console.log("Search:" , typeof(search))
     const countriesToShow =  search === ''
         ?countries

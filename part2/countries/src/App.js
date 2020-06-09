@@ -4,6 +4,7 @@ import Filter from './components/Filter'
 import Display from './components/Display'
 
 const App = () => {
+    console.log("Rendering App component")
     const [countries, setCountries] = useState([])
     const [countryFilter, setFilter] = useState('')
     const [weather, setWeather] = useState(false)
@@ -21,7 +22,6 @@ const App = () => {
 
     const handleFilter = (event) => {
         console.log(event.target.value)
-        setWeather(false)
         setFilter(event.target.value)
     }
 
