@@ -15,7 +15,7 @@ const Weather = ({capital, weather, weatherSetter}) => {
             .get('http://api.weatherstack.com/current', {params})
             .then(response => {
                 console.log("Response is:",response)
-                weatherSetter(response.data.current)
+                weatherSetter(response.data)
             })
         }
 
@@ -32,7 +32,7 @@ const Weather = ({capital, weather, weatherSetter}) => {
                
     console.log("State of weather is: ",weather)
     console.log(capital)
-    if (weather===undefined) {
+    if (weather.success===false) {
         return(
             <>
                 <p>No data returned.</p>
@@ -43,9 +43,9 @@ const Weather = ({capital, weather, weatherSetter}) => {
         
         <div id="weather">
             <h4>Weather in {capital}</h4>
-            <p><b>Temperature</b>: {weather.temperature} {'\u2103'}</p>
-            <img src={weather.weather_icons} alt="weather icon" />
-            <p><b>Wind speed</b>: {weather.wind_speed} km/hr {weather.wind_dir}</p>
+            <p><b>Temperature</b>: {weather.current.temperature} {'\u2103'}</p>
+            <img src={weather.current.weather_icons} alt="weather icon" />
+            <p><b>Wind speed</b>: {weather.current.wind_speed} km/hr {weather.current.wind_dir}</p>
         </div>
     )
 }

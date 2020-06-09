@@ -19,8 +19,11 @@ const App = () => {
 
     useEffect(hook,[])
 
-    const handleFilter = (event) => 
+    const handleFilter = (event) => {
+        console.log(event.target.value)
+        setWeather(false)
         setFilter(event.target.value)
+    }
 
     if (countries.length === 0) {
         return (
