@@ -23,7 +23,7 @@ const CountryInfo = ({country, weather, weatherSetter }) => {
             </div>
             <div id="flag">
                 <h4>Flag</h4>
-                <img src={country.flag} alt="flag" height="216" width="360" />
+                <img src={country.flag} alt="flag" height="200"  style={{border: "solid"}}/>
             </div>
             <Weather capital={country.capital} 
                 weather={weather} weatherSetter={weatherSetter}/>
