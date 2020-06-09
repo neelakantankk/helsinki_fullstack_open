@@ -44,7 +44,7 @@ const Weather = ({capital, weather, weatherSetter}) => {
         <div id="weather">
             <h4>Weather in {capital}</h4>
             <p><b>Temperature</b>: {weather.main.temp} {'\u2103'}</p>
-            <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt="Weather icon"/>
+            <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt="Weather icon" style={{border: "solid 3px"}}/>
             <p><b>Wind speed</b>: {weather.wind.speed} m/s {weather.wind.deg}{'\u00b0'}</p>
         </div>
     )
