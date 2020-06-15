@@ -62,6 +62,28 @@ const App = () => {
 
     }
 
+    const deleteEntry = (person) => {
+        const confirmDelete = window.confirm(`Delete ${person.name}?`)
+
+        if (!confirmDelete) {
+            return false
+        }
+
+        personService
+            .deleteEntry(person.id)
+            .then(isDeleted => {
+                if (isDeleted) {
+                    setPersons(persons.filter(
+                        p => p.id !== person.id))
+                } else {
+                    console.log("Could not delete!")
+                }
+            })
+            .catch(error => console.log(error))
+            
+    }
+        
+
     return (
         <div>
             <h1>Phonebook</h1>
@@ -75,7 +97,7 @@ const App = () => {
             </div>
             <div>
                 <h2>Numbers</h2>
-                <Persons persons={persons} search={search} />
+                <Persons persons={persons} search={search} delEntry={deleteEntry}/>
             </div>
         </div>
     )
