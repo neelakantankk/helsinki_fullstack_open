@@ -33,24 +33,46 @@ const App = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
+
         if (newName === '' || newNumber ==='') {
             window.alert("Name and number cannot be blank!")
             return false
         }
 
+        const foundPerson =  persons.find((person) => 
+                (person.name.toLowerCase() === newName.toLowerCase()))
+        
+        if (foundPerson !== undefined) 
+        {
+            const replaceNumber = 
+                window.confirm(
+                    `${foundPerson.name} is already in the phonebook.`
+                    + ' Replace with new number?')
+
+            if (replaceNumber) {
+                const newPerson = {
+                    ...foundPerson,
+                    number: newNumber
+                }
+                personService
+                    .update(foundPerson.id,newPerson)
+                    .then(returnedPerson => {
+                        setPersons(
+                            persons.map(person => person.id !== foundPerson.id
+                                ?person
+                                :returnedPerson)
+                        )
+                    })
+
+            } 
+            setNewName('')
+            setNewNumber('')
+            return false
+        }
         const newPerson = {
             name: newName,
             number: newNumber,
         }
-
-        if (persons.some((person) => {
-                return (person.name.toLowerCase() === newPerson.name.toLowerCase())
-        })) {
-            window.alert(`${newPerson.name} already added to directory!`)
-            setNewName('')
-            return false
-        }
-
         personService
             .create(newPerson)
             .then(returnedPerson => {
