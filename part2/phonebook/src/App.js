@@ -37,10 +37,14 @@ const App = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
+        if (newName === '' || newNumber ==='') {
+            window.alert("Name and number cannot be blank!")
+            return false
+        }
+
         const newPerson = {
             name: newName,
             number: newNumber,
-            id: persons.length + 1
         }
 
         if (persons.some((person) => {
@@ -51,8 +55,14 @@ const App = () => {
             return false
         }
 
+        axios
+            .post('http://localhost:3001/persons', newPerson)
+            .then(response => {
+                console.log("Response:",response)
+                setPersons(persons.concat(response.data))
+            })
+
         
-        setPersons(persons.concat(newPerson))
         setNewName('')
         setNewNumber('')
         setSearch('')
