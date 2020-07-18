@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import AddPersonForm from './components/AddPersonForm'
 import Persons from './components/Persons'
+import SuccessNotification from './components/SuccessNotification'
+import ErrorNotification from './components/ErrorNotification'
 import personService from './services/persons'
 
 const App = () => {
     const [ persons, setPersons ] = useState([])
     const [ newName, setNewName ] = useState('')
     const [ newNumber, setNewNumber ] = useState('')
-    const [ search, setSearch ] = useState('')
+   const [ search, setSearch ] = useState('')
+    const [ errorMessage, setErrorMessage] = useState(null)
+    const [ successMessage, setSuccessMessage] = useState(null)
 
     useEffect(() => {
         personService
@@ -62,6 +66,19 @@ const App = () => {
                                 ?person
                                 :returnedPerson)
                         )
+                        setSuccessMessage(`${returnedPerson.name} updated successfully`)
+                        setTimeout(() => {
+                            setSuccessMessage(null)
+                        }, 5000)
+                    })
+                    .catch(error => {
+                        setErrorMessage(`${foundPerson.name}'s information is not in server.`)
+                        setPersons(
+                            persons.filter(person => person.id !== foundPerson.id)
+                        )
+                        setTimeout(() => {
+                            setErrorMessage(null)
+                        }, 5000)
                     })
 
             } 
@@ -80,6 +97,10 @@ const App = () => {
                 setNewName('')
                 setNewNumber('')
                 setSearch('')
+                setSuccessMessage(`${returnedPerson.name} added successfully`)
+                setTimeout(() => {
+                    setSuccessMessage(null)
+                }, 5000)
             })
 
     }
@@ -97,18 +118,24 @@ const App = () => {
                 if (isDeleted) {
                     setPersons(persons.filter(
                         p => p.id !== person.id))
+                    setSuccessMessage(`${person.name} deleted successfully`)
+                    setTimeout(() => {
+                        setSuccessMessage(null)
+                    }, 5000)
                 } else {
                     console.log("Could not delete!")
                 }
             })
-            .catch(error => console.log(error))
-            
+            .catch(error => {
+                setErrorMessage(`${person.name}'s information could not be deleted`)
+            })
     }
-        
-
+            
     return (
         <div>
             <h1>Phonebook</h1>
+            <SuccessNotification message = {successMessage} />
+            <ErrorNotification message = {errorMessage} />
             <Filter stateVar={search} handleChange={handleSearch} />
             <div>
             <h2>Add new entry</h2>
